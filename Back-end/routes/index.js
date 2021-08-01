@@ -15,7 +15,7 @@ async function verify(k){
   return userid
 }
 
-async function kakaoAuth(token){   //access토큰 인증
+async function kakaoAuth(token){   
   const user = await axios({
     method:'GET',
     url:`https://kapi.kakao.com/v2/user/me`, 
@@ -27,15 +27,17 @@ async function kakaoAuth(token){   //access토큰 인증
   return email
 }
 
-router.post('/google', async (req, res) => {
-  const user = await verify(req.body.token)
+router.post('/google', async (req, res) => {  //POST /google
+  const user = await verify(req.body.token)   //토큰을 이용해 구글 이메일 주소를 받아옴
   res.send({"user": user})
 })
 
-router.post('/kakao', async (req, res) => {
-   const access_token = req.body.access_token
+router.post('/kakao', async (req, res) => {   //POST /kakao
+   const access_token = req.body.access_token //토큰을 이용해 카카오 이메일 주소를 받아옴(애플리케이션 설정에서 권한 필요)
    const user = await kakaoAuth(access_token)
    res.send({"user": user}) 
 })
+
+//추후에 구현해야할 것 : access 토큰이 만료된다면 refresh 토큰을 이용하여 update 해주는 알고리즘 구현
 
 module.exports = router
