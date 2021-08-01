@@ -8,6 +8,7 @@ import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.gms.common.api.ApiException
+import com.google.gson.JsonElement
 import kotlinx.android.synthetic.main.activity_main.*
 import retrofit2.Call
 import retrofit2.Callback
@@ -67,15 +68,15 @@ class MainActivity : AppCompatActivity() {
             try{
                 val account = task.getResult(ApiException::class.java)!!
                 idToken = account.idToken
-                server.getRequest("zoom").enqueue(object : Callback<ResponseDTO>{
+                server.getRequest(idToken).enqueue(object : Callback<JsonElement>{
                     override fun onResponse(
-                        call: Call<ResponseDTO>,
-                        response: Response<ResponseDTO>
+                        call: Call<JsonElement>,
+                        response: Response<JsonElement>
                     ) {
-                        Log.i("info",response.code().toString())
+                        Log.i("info",response.body().toString())
                     }
 
-                    override fun onFailure(call: Call<ResponseDTO>, t: Throwable) {
+                    override fun onFailure(call: Call<JsonElement>, t: Throwable) {
                     }
 
                 })
