@@ -9,6 +9,10 @@ import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.gms.common.api.ApiException
 import com.google.gson.JsonElement
+import com.kakao.sdk.auth.LoginClient
+import com.kakao.sdk.auth.model.OAuthToken
+import com.kakao.sdk.common.KakaoSdk
+import com.kakao.sdk.user.UserApiClient
 import kotlinx.android.synthetic.main.activity_main.*
 import retrofit2.Call
 import retrofit2.Callback
@@ -22,6 +26,7 @@ class MainActivity : AppCompatActivity() {
     private val RC_SIGN_IN = 123
     private lateinit var idToken : String
     private  lateinit var server: Service
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -37,14 +42,39 @@ class MainActivity : AppCompatActivity() {
             signIn()
         }
 
+        val callback: (OAuthToken?, Throwable?) -> Unit = { token, error ->
+            if (error != null) {
+                //Login Fail
+            }
+            else if (token != null) {
+                //Login Success
+                Log.i("success",token.accessToken)
+                UserApiClient.instance.me{ user, error ->
+                    Log.i("hi", user.toString())
+
+                }
+            }
+        }
+
+
+        KakaoSdk.init(this, getString(R.string.kakao_app_key))
+
+        kakao_login.setOnClickListener {
+            LoginClient.instance.run{
+                if(isKakaoTalkLoginAvailable(this@MainActivity)){
+                    loginWithKakaoTalk(this@MainActivity, callback =callback)
+                }else{
+                    loginWithKakaoAccount(this@MainActivity, callback =callback)
+                }
+            }
+        }
+
 
         val retrofit = Retrofit.Builder()
             .baseUrl("http://10.0.2.2:8001/")
             .addConverterFactory(GsonConverterFactory.create())
             .build()
         server = retrofit.create(Service::class.java)
-
-
     }
 
     override fun onStart() {
@@ -85,8 +115,5 @@ class MainActivity : AppCompatActivity() {
             }
         }
     }
-
-
-
 
 }
