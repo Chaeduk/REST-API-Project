@@ -1,5 +1,5 @@
 const axios = require('axios')
-
+const qs = require("qs");
 const token = ''
 
 async function a(){
@@ -12,4 +12,18 @@ async function a(){
   })
   await console.log(user.data)
 }
-a()
+
+
+async function b(){
+  const what = await axios({
+    method: 'POST',
+    url: 'https://kauth.kakao.com/oauth/token',
+    data: qs.stringify({
+      grant_type: 'refresh_token',
+      client_id: '',
+      refresh_token: ''
+    })  
+  })
+  await console.log(what)
+}
+
