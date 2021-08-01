@@ -3,8 +3,10 @@ const express = require('express')
 const router = express.Router()
 
 router.get('/', (req, res) => {
-  res.status(200)
-  res.send('hello world')
+  console.log(req.query)
+  res.json({"dafd": "hhhh"})
 })
+
+
 
 module.exports = router
