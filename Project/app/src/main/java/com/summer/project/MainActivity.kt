@@ -36,10 +36,9 @@ class MainActivity : AppCompatActivity() {
             signIn()
         }
 
-        //http://127.0.0.1:8001/
 
         val retrofit = Retrofit.Builder()
-            .baseUrl("http://172.30.1.14:8001")
+            .baseUrl("http://10.0.2.2:8001/")
             .addConverterFactory(GsonConverterFactory.create())
             .build()
         server = retrofit.create(Service::class.java)
