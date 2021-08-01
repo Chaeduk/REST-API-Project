@@ -1,4 +1,5 @@
 const express = require('express')
+const axios = require('axios')
 
 const router = express.Router()
 
@@ -14,15 +15,27 @@ async function verify(k){
   return userid
 }
 
-router.post('/', async (req, res) => {
-  const user = await verify(req.body.name)
+async function kakaoAuth(token){   //access토큰 인증
+  const user = await axios({
+    method:'GET',
+    url:`https://kapi.kakao.com/v2/user/me`, 
+    headers:{ 
+      Authorization:`Bearer ${token}`
+    }
+  })
+  const email = user.data.kakao_account.email
+  return email
+}
+
+router.post('/google', async (req, res) => {
+  const user = await verify(req.body.token)
   res.send({"user": user})
 })
 
-router.get('/callback', (req,res) => {
-  res.send()
+router.post('/kakao', async (req, res) => {
+   const access_token = req.body.access_token
+   const user = await kakaoAuth(access_token)
+   res.send({"user": user}) 
 })
-
-
 
 module.exports = router
