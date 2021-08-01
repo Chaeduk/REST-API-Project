@@ -19,6 +19,10 @@ router.post('/', async (req, res) => {
   res.send({"user": user})
 })
 
+router.get('/callback', (req,res) => {
+  res.send()
+})
+
 
 
 module.exports = router
