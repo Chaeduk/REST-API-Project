@@ -13,7 +13,11 @@ data class ResponseDTO(var result:String? = null)
 interface Service { //api 관리 인터페이스
 
     @FormUrlEncoded
-    @POST("/")
-    fun getRequest(@Field("name") name:String): Call<JsonElement>
+    @POST("/google")
+    fun GoogleAuth(@Field("token") token:String): Call<JsonElement>
+
+    @FormUrlEncoded
+    @POST("/kakao")
+    fun KaKaoAuth(@Field("access_token") access_token:String, @Field("refresh_token") refresh_token:String): Call<JsonElement>
 
 }
