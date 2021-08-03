@@ -38,7 +38,7 @@ router.post('/google', async (req, res) => {  //POST /google
     })
     await new_member.save()
     res.send({"token": req.body.token, "message": 'register'})
-  } else if(member.area == undefined || member.nickname == undefined || member.profile_URL == undefined){
+  } else if(member.area == null || member.nickname == null || member.profile_URL == null){
     res.send({"token": req.body.token, "message": 'register'})
   } else{
     res.send({"token": req.body.token, "message": 'complete register'})
@@ -56,7 +56,7 @@ router.post('/kakao', async (req, res) => {   //POST /kakao
      })
      await new_member.save()
      res.send({"token": req.body.token, "message": 'register'})
-   } else if(member.area == undefined || member.nickname == undefined || member.profile_URL == undefined){
+   } else if(member.area == null || member.nickname == null || member.profile_URL == null){
     res.send({"token": req.body.token, "message": 'register'})
   } else{
     res.send({"token": req.body.token, "message": 'complete register'})

@@ -18,7 +18,6 @@ const userSchema = new Schema({
   },
   nickname: {
     type: String, //애플리케이션에서 회원이 쓰는 이름
-    unique: true,
   },
   profile_URL: {
     type: String,

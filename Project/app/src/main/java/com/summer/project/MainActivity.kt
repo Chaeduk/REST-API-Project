@@ -50,15 +50,15 @@ class MainActivity : AppCompatActivity() {
             else if (token != null) {
                 //Login Success
                 Log.i("success",token.toString())
-                server.KaKaoAuth(token.accessToken, token.refreshToken).enqueue(object : Callback<JsonElement>{  //카카오 로그인으로 얻은 토큰들을 서버로 전달
+                server.KaKaoAuth(token.accessToken, token.refreshToken).enqueue(object : Callback<ResponseDTO>{  //카카오 로그인으로 얻은 토큰들을 서버로 전달
                     override fun onResponse(
-                        call: Call<JsonElement>,
-                        response: Response<JsonElement>
+                        call: Call<ResponseDTO>,
+                        response: Response<ResponseDTO>
                     ) {
-                        Log.i("info",response.body().toString())        //서버의 응답
+                        Log.i("info", response.body()?.message.toString())        //서버의 응답
                     }
 
-                    override fun onFailure(call: Call<JsonElement>, t: Throwable) {
+                    override fun onFailure(call: Call<ResponseDTO>, t: Throwable) {
                     }
 
                 })
@@ -112,15 +112,15 @@ class MainActivity : AppCompatActivity() {
             try{
                 val account = task.getResult(ApiException::class.java)!!
                 idToken = account.idToken       //토큰 아이디를 받아옴(토큰 만료여부 확인하기)
-                server.GoogleAuth(idToken).enqueue(object : Callback<JsonElement>{  //구글 로그인으로 얻은 토큰을 서버로 전달
+                server.GoogleAuth(idToken).enqueue(object : Callback<ResponseDTO>{  //구글 로그인으로 얻은 토큰을 서버로 전달
                     override fun onResponse(
-                        call: Call<JsonElement>,
-                        response: Response<JsonElement>
+                        call: Call<ResponseDTO>,
+                        response: Response<ResponseDTO>
                     ) {
-                        Log.i("info",response.body().toString())        //서버의 응답
+                        Log.i("info",response.body()?.message.toString())        //서버의 응답
                     }
 
-                    override fun onFailure(call: Call<JsonElement>, t: Throwable) {
+                    override fun onFailure(call: Call<ResponseDTO>, t: Throwable) {
 
                     }
 
