@@ -19,7 +19,7 @@ async function verify(k){
 async function kakaoAuth(token){   
   const user = await axios({
     method:'GET',
-    url:`https://kapi.kakao.com/v2/user/me`, 
+    url:'https://kapi.kakao.com/v2/user/me', 
     headers:{ 
       Authorization:`Bearer ${token}`
     }

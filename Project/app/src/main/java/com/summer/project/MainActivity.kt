@@ -89,6 +89,14 @@ class MainActivity : AppCompatActivity() {
             .addConverterFactory(GsonConverterFactory.create())
             .build()
         server = retrofit.create(Service::class.java)
+
+
+        signup.setOnClickListener {
+            val intent = Intent(this, LocalSignup::class.java)
+            startActivity(intent)
+        }
+
+
     }
 
 //    override fun onStart() {
