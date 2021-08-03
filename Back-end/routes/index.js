@@ -52,7 +52,7 @@ router.post('/kakao', async (req, res) => {   //POST /kakao
    if(Object.keys(member).length == 0){
      const new_member = new User({
        account: user,
-       login_path: 'local'
+       login_path: 'kakao'
      })
      await new_member.save()
      res.send({"token": req.body.token, "message": 'register'})
@@ -62,6 +62,38 @@ router.post('/kakao', async (req, res) => {   //POST /kakao
     res.send({"token": req.body.token, "message": 'complete register'})
   }
 })
+
+router.post('/local', async(req, res)=>{    //POST /local
+  const member = await User.find({account: req.body.id}, {password: req.body.password}, {login_path: 'local'})    //암호화 해서 찾기
+  if(Object.keys(member).length == 0){
+    res.send({"message": "no"})
+  } else if(member.area == null || member.nickname == null || member.profile_URL == null){
+    res.send({"token": "hello", "message": 'register'})
+  } else{
+    res.send({"token": "hello", "message": 'complete register'})
+  }
+})
+
+router.post('/signup', async(req, res)=>{   //POST /signup
+  const new_member = new User({
+    account: req.body.id,
+    password: req.body.password,    //암호화 하기
+    login_path: 'local'
+  })
+
+
+})
+
+router.get('/doublecheck', async(req, res)=>{   //GET /doublecheck
+  const member = await User.find({account: req.query.id}, {login_path: 'local'})
+  if(Object.keys(member).length == 0){
+    res.send({"message": "good"})
+  } else{
+    res.send({"message": "duplicated"})
+  }
+})
+
+
 
 //추후에 구현해야할 것 : access 토큰이 만료된다면 refresh 토큰을 이용하여 update 해주는 알고리즘 구현
 
