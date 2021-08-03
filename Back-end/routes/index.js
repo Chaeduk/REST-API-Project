@@ -29,7 +29,7 @@ async function kakaoAuth(token){
 }
 
 router.post('/google', async (req, res) => {  //POST /google
-  const user = await verify(req.body.token)   //토큰을 이용해 구글 이메일 주소를 받아옴
+  const user = await verify(req.body.token)   //토큰을 이용해 구글 이메일 주소를 받아옴(refresh토큰을 찾지못하여서 내가 다시 토큰 발행)
   const member = await User.find({account: user}, {login_path: 'google'})
   if(Object.keys(member).length == 0 ){
     const new_member = new User({
@@ -80,8 +80,6 @@ router.post('/signup', async(req, res)=>{   //POST /signup
     password: req.body.password,    //암호화 하기
     login_path: 'local'
   })
-
-
 })
 
 router.get('/doublecheck', async(req, res)=>{   //GET /doublecheck

@@ -1,6 +1,5 @@
 package com.summer.project
 
-import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
@@ -9,12 +8,10 @@ import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.gms.common.api.ApiException
-import com.google.gson.JsonElement
 import com.kakao.sdk.auth.LoginClient
 import com.kakao.sdk.auth.model.OAuthToken
 import com.kakao.sdk.common.KakaoSdk
-import com.kakao.sdk.user.UserApiClient
-import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.activity_signin.*
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -22,7 +19,7 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
 
-class MainActivity : AppCompatActivity() {
+class SigninActivity : AppCompatActivity() {
     private lateinit var mGoogleSignInClient: GoogleSignInClient
     private val RC_SIGN_IN = 123
     private lateinit var idToken : String
@@ -30,7 +27,7 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        setContentView(R.layout.activity_signin)
 
         val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
             .requestIdToken(getString(R.string.client_id))
@@ -39,7 +36,7 @@ class MainActivity : AppCompatActivity() {
 
         mGoogleSignInClient = GoogleSignIn.getClient(this, gso);
 
-        google_login.setOnClickListener {       //구글 로그인 버튼 click
+        btn_signin_google.setOnClickListener {       //구글 로그인 버튼 click
             signIn()
         }
 
@@ -73,12 +70,12 @@ class MainActivity : AppCompatActivity() {
 
         KakaoSdk.init(this, getString(R.string.kakao_app_key))
 
-        kakao_login.setOnClickListener {        //카카오 로그인 버튼 click
+        btn_signin_kakao.setOnClickListener {        //카카오 로그인 버튼 click
             LoginClient.instance.run{
-                if(isKakaoTalkLoginAvailable(this@MainActivity)){   //카카오톡 앱이 있는지 여부
-                    loginWithKakaoTalk(this@MainActivity, callback =callback)   //카카오톡이 설치되어 있으면 앱에서 로그인 처리
+                if(isKakaoTalkLoginAvailable(this@SigninActivity)){   //카카오톡 앱이 있는지 여부
+                    loginWithKakaoTalk(this@SigninActivity, callback =callback)   //카카오톡이 설치되어 있으면 앱에서 로그인 처리
                 }else{
-                    loginWithKakaoAccount(this@MainActivity, callback =callback)    //카카오톡이 설치되어 있지않으면 웹으로 처리
+                    loginWithKakaoAccount(this@SigninActivity, callback =callback)    //카카오톡이 설치되어 있지않으면 웹으로 처리
                 }
             }
         }
@@ -91,7 +88,7 @@ class MainActivity : AppCompatActivity() {
         server = retrofit.create(Service::class.java)
 
 
-        signup.setOnClickListener {
+        btn_signin_register.setOnClickListener {
             val intent = Intent(this, LocalSignup::class.java)
             startActivity(intent)
         }

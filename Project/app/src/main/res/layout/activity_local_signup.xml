@@ -7,7 +7,7 @@
     tools:context=".LocalSignup">
 
     <TextView
-        android:id="@+id/textView"
+        android:id="@+id/tv_signup_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="130dp"
@@ -19,31 +19,31 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <EditText
-        android:id="@+id/join_password"
+        android:id="@+id/edt_signup_pwd"
         android:layout_width="0dp"
         android:layout_height="44dp"
         android:layout_marginTop="30dp"
         android:ems="10"
         android:hint="비밀번호"
         android:inputType="textPassword"
-        app:layout_constraintEnd_toEndOf="@+id/button3"
-        app:layout_constraintStart_toStartOf="@+id/join_email"
-        app:layout_constraintTop_toBottomOf="@+id/join_email" />
+        app:layout_constraintEnd_toEndOf="@+id/btn_signup_doublecheck"
+        app:layout_constraintStart_toStartOf="@+id/edt_signup_id"
+        app:layout_constraintTop_toBottomOf="@+id/edt_signup_id" />
 
     <EditText
-        android:id="@+id/join_pwck"
+        android:id="@+id/edt_signup_edtok"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="30dp"
         android:ems="10"
         android:hint="비밀번호 확인"
         android:inputType="textPassword"
-        app:layout_constraintEnd_toEndOf="@+id/join_password"
-        app:layout_constraintStart_toStartOf="@+id/join_password"
-        app:layout_constraintTop_toBottomOf="@+id/join_password" />
+        app:layout_constraintEnd_toEndOf="@+id/edt_signup_pwd"
+        app:layout_constraintStart_toStartOf="@+id/edt_signup_pwd"
+        app:layout_constraintTop_toBottomOf="@+id/edt_signup_pwd" />
 
     <EditText
-        android:id="@+id/join_email"
+        android:id="@+id/edt_signup_id"
         android:layout_width="0dp"
         android:layout_height="50dp"
         android:layout_marginStart="50dp"
@@ -52,39 +52,39 @@
         android:ems="10"
         android:hint="아이디"
         android:inputType="textEmailAddress"
-        app:layout_constraintEnd_toStartOf="@+id/button3"
+        app:layout_constraintEnd_toStartOf="@+id/btn_signup_doublecheck"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView" />
+        app:layout_constraintTop_toBottomOf="@+id/tv_signup_text" />
 
     <Button
-        android:id="@+id/delete"
+        android:id="@+id/btn_signup_register"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="40dp"
         android:layout_marginTop="45dp"
         android:text="가입"
-        app:layout_constraintStart_toEndOf="@+id/join_button"
-        app:layout_constraintTop_toBottomOf="@+id/join_pwck" />
+        app:layout_constraintStart_toEndOf="@+id/btn_signup_cancel"
+        app:layout_constraintTop_toBottomOf="@+id/edt_signup_edtok" />
 
     <Button
-        android:id="@+id/join_button"
+        android:id="@+id/btn_signup_cancel"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="96dp"
         android:text="취소"
-        app:layout_constraintBaseline_toBaselineOf="@+id/delete"
+        app:layout_constraintBaseline_toBaselineOf="@+id/btn_signup_register"
         app:layout_constraintStart_toStartOf="parent" />
 
     <Button
-        android:id="@+id/button3"
+        android:id="@+id/btn_signup_doublecheck"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="50dp"
         android:text="중복확인"
-        app:layout_constraintBottom_toBottomOf="@+id/join_email"
+        app:layout_constraintBottom_toBottomOf="@+id/edt_signup_id"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/join_email"
-        app:layout_constraintTop_toTopOf="@+id/join_email" />
+        app:layout_constraintStart_toEndOf="@+id/edt_signup_id"
+        app:layout_constraintTop_toTopOf="@+id/edt_signup_id" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
