@@ -38,11 +38,11 @@ router.post('/google', async (req, res) => {  //POST /google
       login_path: 'google'
     })
     await new_member.save()
-    res.send({"token": req.body.token, "message": 'register'})
+    res.send({"token": new_member._id, "message": 'register'})
   } else if(member.area == null || member.nickname == null || member.profile_URL == null){
-    res.send({"token": req.body.token, "message": 'register'})
+    res.send({"token": member[0]._id, "message": 'register'})
   } else{
-    res.send({"token": req.body.token, "message": 'complete register'})
+    res.send({"token": member[0]._id, "message": 'complete register'})
   }
 })
 
@@ -56,26 +56,26 @@ router.post('/kakao', async (req, res) => {   //POST /kakao
        login_path: 'kakao'
      })
      await new_member.save()
-     res.send({"token": req.body.token, "message": 'register'})
+     res.send({"token": new_member._id, "message": 'register'})
    } else if(member.area == null || member.nickname == null || member.profile_URL == null){
-    res.send({"token": req.body.token, "message": 'register'})
+    res.send({"token": member[0]._id, "message": 'register'})
   } else{
-    res.send({"token": req.body.token, "message": 'complete register'})
+    res.send({"token": member[0]._id, "message": 'complete register'})
   }
 })
 
 router.post('/local', async(req, res)=>{    //POST /local
   const member = await User.findOne({account: req.body.id, login_path: 'local' })    //암호화 해서 찾기
-  if(Object.keys(member).length == 0){
+  if(member == null){
     res.send({"token": "","message": "no"})
   } else{
       const result = await bcrypt.compare(req.body.pwd,member.password)
     if(!result) {
       res.send({"token": "","message": "no"})
     } else if(member.area == null || member.nickname == null || member.profile_URL == null){
-      res.send({"token": "", "message": 'register'})
+      res.send({"token": member._id, "message": 'register'})
     } else{
-      res.send({"token": "", "message": 'complete register'})
+      res.send({"token": member._id, "message": 'complete register'})
     }
   }
   

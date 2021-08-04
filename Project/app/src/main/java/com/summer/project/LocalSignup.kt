@@ -27,9 +27,7 @@ class LocalSignup : AppCompatActivity() {
 
 
         btn_signup_cancel.setOnClickListener {
-//            finish()
-            val intent = Intent(this,ProfileActivity::class.java)
-            startActivity(intent)
+            finish()
         }
 
         btn_signup_register.setOnClickListener {

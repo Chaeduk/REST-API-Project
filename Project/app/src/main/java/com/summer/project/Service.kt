@@ -5,7 +5,7 @@ import com.google.gson.JsonElement
 import retrofit2.Call
 import retrofit2.http.*
 
-data class ResponseDTO(var result:String? = null, var message:String?)
+data class ResponseDTO(var token:String? = null, var message:String?)
 data class ResponseMSG(var message:String?)
 
 interface Service { //api 관리 인터페이스

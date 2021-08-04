@@ -54,7 +54,7 @@ class SigninActivity : AppCompatActivity() {
                         call: Call<ResponseDTO>,
                         response: Response<ResponseDTO>
                     ) {
-                        Log.i("info", response.body()?.message.toString())        //서버의 응답
+                        Log.i("info", response.body()?.token.toString())        //서버의 응답
                     }
 
                     override fun onFailure(call: Call<ResponseDTO>, t: Throwable) {
@@ -102,9 +102,11 @@ class SigninActivity : AppCompatActivity() {
                     response: Response<ResponseDTO>
                 ) {
                     if(response.body()?.message.toString() == "register"){
-                        Toast.makeText(this@SigninActivity, "로그인 성공!!!!!", Toast.LENGTH_SHORT).show()
+                        val intent = Intent(this@SigninActivity, ProfileActivity::class.java)
+                        startActivity(intent)
+
                     } else{
-                        Toast.makeText(this@SigninActivity,response.body()?.message.toString() , Toast.LENGTH_SHORT).show()
+                        Toast.makeText(this@SigninActivity, "로그인 실패" , Toast.LENGTH_SHORT).show()
                     }
                 }
                 override fun onFailure(call: Call<ResponseDTO>, t: Throwable) {}
@@ -140,7 +142,7 @@ class SigninActivity : AppCompatActivity() {
                         call: Call<ResponseDTO>,
                         response: Response<ResponseDTO>
                     ) {
-                        Log.i("info",response.body()?.message.toString())        //서버의 응답
+                        Log.i("info",response.body()?.token.toString())        //서버의 응답
                     }
 
                     override fun onFailure(call: Call<ResponseDTO>, t: Throwable) {
