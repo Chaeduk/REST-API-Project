@@ -1,5 +1,6 @@
 package com.summer.project
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
@@ -26,7 +27,9 @@ class LocalSignup : AppCompatActivity() {
 
 
         btn_signup_cancel.setOnClickListener {
-            finish()
+//            finish()
+            val intent = Intent(this,ProfileActivity::class.java)
+            startActivity(intent)
         }
 
         btn_signup_register.setOnClickListener {
