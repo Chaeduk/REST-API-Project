@@ -10,7 +10,7 @@
         android:id="@+id/tv_signup_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="130dp"
+        android:layout_marginTop="100dp"
         android:text="회원가입"
         android:textSize="30sp"
         android:textStyle="bold"
@@ -22,7 +22,7 @@
         android:id="@+id/edt_signup_pwd"
         android:layout_width="0dp"
         android:layout_height="44dp"
-        android:layout_marginTop="30dp"
+        android:layout_marginTop="40dp"
         android:ems="10"
         android:hint="비밀번호"
         android:inputType="textPassword"
@@ -31,10 +31,10 @@
         app:layout_constraintTop_toBottomOf="@+id/edt_signup_id" />
 
     <EditText
-        android:id="@+id/edt_signup_edtok"
+        android:id="@+id/edt_signup_pwdok"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="30dp"
+        android:layout_marginTop="40dp"
         android:ems="10"
         android:hint="비밀번호 확인"
         android:inputType="textPassword"
@@ -45,7 +45,7 @@
     <EditText
         android:id="@+id/edt_signup_id"
         android:layout_width="0dp"
-        android:layout_height="50dp"
+        android:layout_height="wrap_content"
         android:layout_marginStart="50dp"
         android:layout_marginTop="45dp"
         android:layout_marginEnd="10dp"
@@ -61,16 +61,16 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="40dp"
-        android:layout_marginTop="45dp"
+        android:layout_marginTop="30dp"
         android:text="가입"
         app:layout_constraintStart_toEndOf="@+id/btn_signup_cancel"
-        app:layout_constraintTop_toBottomOf="@+id/edt_signup_edtok" />
+        app:layout_constraintTop_toBottomOf="@+id/edt_signup_pwdok" />
 
     <Button
         android:id="@+id/btn_signup_cancel"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="96dp"
+        android:layout_marginStart="136dp"
         android:text="취소"
         app:layout_constraintBaseline_toBaselineOf="@+id/btn_signup_register"
         app:layout_constraintStart_toStartOf="parent" />
@@ -85,6 +85,27 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/edt_signup_id"
         app:layout_constraintTop_toTopOf="@+id/edt_signup_id" />
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="2dp"
+        android:text="4~12자의 영문 대소문자와 숫자로만 입력"
+        app:layout_constraintEnd_toEndOf="@+id/btn_signup_doublecheck"
+        app:layout_constraintHorizontal_bias="0.289"
+        app:layout_constraintStart_toStartOf="@+id/edt_signup_id"
+        app:layout_constraintTop_toBottomOf="@+id/edt_signup_id" />
+
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="2dp"
+        android:text="4~12자의 영문 대소문자와 숫자로만 입력"
+        app:layout_constraintEnd_toEndOf="@+id/edt_signup_pwd"
+        app:layout_constraintStart_toStartOf="@+id/edt_signup_pwd"
+        app:layout_constraintTop_toBottomOf="@+id/edt_signup_pwd" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

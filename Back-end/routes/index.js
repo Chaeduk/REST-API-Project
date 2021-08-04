@@ -1,6 +1,7 @@
 const express = require('express')
 var User = require('../schemas/user')
 const axios = require('axios')
+const bcrypt = require('bcrypt')
 
 const router = express.Router()
 
@@ -30,7 +31,7 @@ async function kakaoAuth(token){
 
 router.post('/google', async (req, res) => {  //POST /google
   const user = await verify(req.body.token)   //토큰을 이용해 구글 이메일 주소를 받아옴(refresh토큰을 찾지못하여서 내가 다시 토큰 발행)
-  const member = await User.find({account: user}, {login_path: 'google'})
+  const member = await User.find({account: user, login_path: 'google'})
   if(Object.keys(member).length == 0 ){
     const new_member = new User({
       account: user,
@@ -48,7 +49,7 @@ router.post('/google', async (req, res) => {  //POST /google
 router.post('/kakao', async (req, res) => {   //POST /kakao
    const access_token = req.body.access_token //토큰을 이용해 카카오 이메일 주소를 받아옴(애플리케이션 설정에서 권한 필요)
    const user = await kakaoAuth(access_token)
-   const member = await User.find({account: user}, {login_path: 'kakao'})
+   const member = await User.find({account: user, login_path: 'kakao'})
    if(Object.keys(member).length == 0){
      const new_member = new User({
        account: user,
@@ -64,26 +65,35 @@ router.post('/kakao', async (req, res) => {   //POST /kakao
 })
 
 router.post('/local', async(req, res)=>{    //POST /local
-  const member = await User.find({account: req.body.id}, {password: req.body.password}, {login_path: 'local'})    //암호화 해서 찾기
+  const member = await User.findOne({account: req.body.id, login_path: 'local' })    //암호화 해서 찾기
   if(Object.keys(member).length == 0){
-    res.send({"message": "no"})
-  } else if(member.area == null || member.nickname == null || member.profile_URL == null){
-    res.send({"token": "hello", "message": 'register'})
+    res.send({"token": "","message": "no"})
   } else{
-    res.send({"token": "hello", "message": 'complete register'})
+      const result = await bcrypt.compare(req.body.pwd,member.password)
+    if(!result) {
+      res.send({"token": "","message": "no"})
+    } else if(member.area == null || member.nickname == null || member.profile_URL == null){
+      res.send({"token": "", "message": 'register'})
+    } else{
+      res.send({"token": "", "message": 'complete register'})
+    }
   }
+  
 })
 
 router.post('/signup', async(req, res)=>{   //POST /signup
+  const hash = await bcrypt.hash(req.body.pwd, 12)
   const new_member = new User({
     account: req.body.id,
-    password: req.body.password,    //암호화 하기
+    password: hash,    //암호화 하기
     login_path: 'local'
   })
+  await new_member.save()
+  res.send({"message":"good"})
 })
 
 router.get('/doublecheck', async(req, res)=>{   //GET /doublecheck
-  const member = await User.find({account: req.query.id}, {login_path: 'local'})
+  const member = await User.find({account: req.query.id, login_path: 'local'})
   if(Object.keys(member).length == 0){
     res.send({"message": "good"})
   } else{

@@ -3,6 +3,7 @@ package com.summer.project
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
@@ -11,6 +12,7 @@ import com.google.android.gms.common.api.ApiException
 import com.kakao.sdk.auth.LoginClient
 import com.kakao.sdk.auth.model.OAuthToken
 import com.kakao.sdk.common.KakaoSdk
+import kotlinx.android.synthetic.main.activity_local_signup.*
 import kotlinx.android.synthetic.main.activity_signin.*
 import retrofit2.Call
 import retrofit2.Callback
@@ -91,6 +93,22 @@ class SigninActivity : AppCompatActivity() {
         btn_signin_register.setOnClickListener {
             val intent = Intent(this, LocalSignup::class.java)
             startActivity(intent)
+        }
+
+        btn_signin_login.setOnClickListener {
+            server.Signin(edt_signin_id.text.toString(), edt_signin_pwd.text.toString()).enqueue(object : Callback<ResponseDTO> {
+                override fun onResponse(
+                    call: Call<ResponseDTO>,
+                    response: Response<ResponseDTO>
+                ) {
+                    if(response.body()?.message.toString() == "register"){
+                        Toast.makeText(this@SigninActivity, "로그인 성공!!!!!", Toast.LENGTH_SHORT).show()
+                    } else{
+                        Toast.makeText(this@SigninActivity,response.body()?.message.toString() , Toast.LENGTH_SHORT).show()
+                    }
+                }
+                override fun onFailure(call: Call<ResponseDTO>, t: Throwable) {}
+            })
         }
 
 
