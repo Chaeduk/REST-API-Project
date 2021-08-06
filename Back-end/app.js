@@ -3,6 +3,7 @@ const morgan = require('morgan')
 require('dotenv').config()
 
 const indexRouter = require('./routes')
+const profileRouter = require('./routes/profile')
 
 const connect = require('./schemas')
 
@@ -16,6 +17,7 @@ app.use(express.json())
 app.use(express.urlencoded({extended: false}))
 
 app.use('/', indexRouter)
+app.use('/profile', profileRouter)
 
 app.use((req, res, next) => {
   const err = new Error('Not Found')

@@ -103,6 +103,7 @@ class SigninActivity : AppCompatActivity() {
                 ) {
                     if(response.body()?.message.toString() == "register"){
                         val intent = Intent(this@SigninActivity, ProfileActivity::class.java)
+                        intent.putExtra("token",response.body()?.token.toString())
                         startActivity(intent)
 
                     } else{
